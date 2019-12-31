@@ -129,14 +129,14 @@ function Push-DPMAgentInstall {
                     continue;
                 }
 
-                #Configure DPM Agent
-                Invoke-Command -Session $session -ArgumentList $DPMServerName -ScriptBlock {
-                    Param($DPMServerName)
-                    Start-Process -FilePath "C:\Program Files\Microsoft Data Protection Manager\DPM\bin\SetDpmServer.exe" -ArgumentList "-dpmServerName $DPMServerName" -RedirectStandardOutput "c:\dpmagentinstall\configure.log" -RedirectStandardError "c:\dpmagentinstall\configerror.log" -NoNewWindow -Wait | out-null
-                }
+                #Configure DPM Agent - this step moved to it's own function for idempotency
+                #Invoke-Command -Session $session -ArgumentList $DPMServerName -ScriptBlock {
+                #    Param($DPMServerName)
+                #    Start-Process -FilePath "C:\Program Files\Microsoft Data Protection Manager\DPM\bin\SetDpmServer.exe" -ArgumentList "-dpmServerName $DPMServerName" -RedirectStandardOutput "c:\dpmagentinstall\configure.log" -RedirectStandardError "c:\dpmagentinstall\configerror.log" -NoNewWindow -Wait | out-null
+                #}
 
                 Write-Verbose "Logs on $server at c:\dpmagentinstall\"
-                Write-Verbose "$Server should be ready for DPM attach"
+                #Write-Verbose "$Server should be ready for DPM attach"
             }
         }
     }
